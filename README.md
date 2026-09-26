@@ -1,5 +1,8 @@
 # 🩺 MedPlus Frontend — Specialist Booking & Clinical Care Portal
 
+- **Frontend Repository:** [https://github.com/anas-byte-dev/MedPlus-Frontend](https://github.com/anas-byte-dev/MedPlus-Frontend)
+- **Backend Repository:** [https://github.com/anas-byte-dev/MedPlus-Backend](https://github.com/anas-byte-dev/MedPlus-Backend)
+
 Welcome to the frontend of **MedPlus Appointments**! I built this client using **React 19**, **Vite**, and clean **Vanilla CSS** to deliver a fast, responsive, and distraction-free healthcare portal. It serves patients looking for doctors across Muzaffarpur, Patna, and Delhi NCR, while giving physicians, hospital managers, and administrators dedicated dashboards to run their daily clinical operations.
 
 ---

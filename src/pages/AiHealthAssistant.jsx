@@ -24,6 +24,21 @@ const COMMON_CONCERNS = [
   { label: 'Migraine / Headache', query: 'I have a throbbing headache on one side of my forehead sensitive to light.' }
 ];
 
+const renderMessageText = (text) => {
+  if (!text) return null;
+  const parts = text.split(/(\*\*.*?\*\*)/g);
+  return parts.map((part, i) => {
+    if (part.startsWith('**') && part.endsWith('**')) {
+      return (
+        <strong key={i} style={{ color: 'inherit', fontWeight: 700 }}>
+          {part.slice(2, -2)}
+        </strong>
+      );
+    }
+    return part;
+  });
+};
+
 export const AiHealthAssistant = () => {
   const { user } = useAuth();
   const [messages, setMessages] = useState([
@@ -35,13 +50,19 @@ export const AiHealthAssistant = () => {
   ]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
-  const messagesEndRef = useRef(null);
+  const chatContainerRef = useRef(null);
 
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  const scrollToBottom = (behavior = 'smooth') => {
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTo({
+        top: chatContainerRef.current.scrollHeight,
+        behavior
+      });
+    }
   };
 
   useEffect(() => {
+    // Scroll chat container down without scrolling the outer window/page
     scrollToBottom();
   }, [messages, loading]);
 
@@ -181,18 +202,22 @@ export const AiHealthAssistant = () => {
       </div>
 
       {/* Chat Messages Container */}
-      <div className="glass-panel" style={{
-        background: 'var(--bg-surface)',
-        border: '1px solid var(--border)',
-        borderRadius: 16,
-        padding: '20px 16px',
-        minHeight: 420,
-        maxHeight: 560,
-        overflowY: 'auto',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 16
-      }}>
+      <div 
+        ref={chatContainerRef}
+        className="glass-panel" 
+        style={{
+          background: 'var(--bg-surface)',
+          border: '1px solid var(--border)',
+          borderRadius: 16,
+          padding: '20px 16px',
+          minHeight: 420,
+          maxHeight: 560,
+          overflowY: 'auto',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 16
+        }}
+      >
         {messages.map((msg, index) => {
           const isUser = msg.sender === 'user';
           return (
@@ -223,19 +248,19 @@ export const AiHealthAssistant = () => {
 
               <div style={{
                 maxWidth: '82%',
-                backgroundColor: isUser ? 'var(--primary)' : '#f8fafc',
+                backgroundColor: isUser ? 'var(--primary)' : 'var(--bg-muted)',
                 color: isUser ? '#ffffff' : 'var(--text-main)',
                 padding: '14px 18px',
                 borderRadius: 14,
                 borderTopRightRadius: isUser ? 2 : 14,
                 borderTopLeftRadius: isUser ? 14 : 2,
-                border: isUser ? 'none' : '1px solid #e2e8f0',
+                border: isUser ? 'none' : '1px solid var(--border)',
                 boxShadow: isUser ? '0 2px 8px rgba(15, 41, 66, 0.12)' : 'none',
                 lineHeight: 1.6,
                 fontSize: 14
               }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6, gap: 10 }}>
-                  <span style={{ fontSize: 11, fontWeight: 700, color: isUser ? '#93c5fd' : '#0369a1' }}>
+                  <span style={{ fontSize: 11, fontWeight: 700, color: isUser ? '#93c5fd' : 'var(--accent-blue, #0284c7)' }}>
                     {isUser ? (user?.fullName || 'You') : 'Dr. MedPlus AI'}
                   </span>
                   <span style={{ fontSize: 10.5, color: isUser ? '#cbd5e1' : 'var(--text-dim)' }}>
@@ -244,7 +269,7 @@ export const AiHealthAssistant = () => {
                 </div>
 
                 <div style={{ whiteSpace: 'pre-line', fontSize: 13.5 }}>
-                  {msg.text}
+                  {renderMessageText(msg.text)}
                 </div>
               </div>
             </div>
@@ -281,8 +306,6 @@ export const AiHealthAssistant = () => {
             </div>
           </div>
         )}
-
-        <div ref={messagesEndRef} />
       </div>
 
       {/* Input Bar */}
@@ -307,14 +330,16 @@ export const AiHealthAssistant = () => {
           placeholder="Describe your symptoms (e.g. fever for 2 days, chest discomfort, joint pain)..."
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          disabled={loading}
+          readOnly={loading}
           style={{
             border: 'none',
             padding: '10px 14px',
             fontSize: 14,
             outline: 'none',
             width: '100%',
-            backgroundColor: 'transparent'
+            backgroundColor: 'transparent',
+            color: 'var(--text-main)',
+            cursor: loading ? 'wait' : 'text'
           }}
         />
 

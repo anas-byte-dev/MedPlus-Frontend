@@ -40,10 +40,15 @@ export const AgentCopilot = ({ onOpenAiConfig, aiConfig }) => {
   ]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
-  const messagesEndRef = useRef(null);
+  const chatContainerRef = useRef(null);
 
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  const scrollToBottom = (behavior = 'smooth') => {
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTo({
+        top: chatContainerRef.current.scrollHeight,
+        behavior
+      });
+    }
   };
 
   useEffect(() => {
@@ -151,14 +156,17 @@ export const AgentCopilot = ({ onOpenAiConfig, aiConfig }) => {
         borderRadius: 14,
         overflow: 'hidden'
       }}>
-        <div style={{
-          flex: 1,
-          padding: '16px 18px',
-          overflowY: 'auto',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: 14
-        }}>
+        <div 
+          ref={chatContainerRef}
+          style={{
+            flex: 1,
+            padding: '16px 18px',
+            overflowY: 'auto',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 14
+          }}
+        >
           {messages.map((msg, i) => (
             <div
               key={i}
@@ -263,7 +271,6 @@ export const AgentCopilot = ({ onOpenAiConfig, aiConfig }) => {
               </div>
             </div>
           )}
-          <div ref={messagesEndRef} />
         </div>
 
         {/* Input Bar */}
