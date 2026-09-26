@@ -3,19 +3,17 @@
 - **Frontend Repository:** [https://github.com/anas-byte-dev/MedPlus-Frontend](https://github.com/anas-byte-dev/MedPlus-Frontend)
 - **Backend Repository:** [https://github.com/anas-byte-dev/MedPlus-Backend](https://github.com/anas-byte-dev/MedPlus-Backend)
 
-Welcome to the frontend of **MedPlus Appointments**! I built this client using **React 19**, **Vite**, and clean **Vanilla CSS** to deliver a fast, responsive, and distraction-free healthcare portal. It serves patients looking for doctors across Muzaffarpur, Patna, and Delhi NCR, while giving physicians, hospital managers, and administrators dedicated dashboards to run their daily clinical operations.
+Welcome to **MedPlus Frontend** — a responsive healthcare portal built with **React 19**, **Vite**, and modular **Vanilla CSS**. It enables patients to book specialist consultations across Muzaffarpur, Patna, and Delhi NCR, while providing dedicated dashboards for physicians, hospital staff, and administrators.
 
 ---
 
-## 💡 Why I Built It This Way
+## 🎨 Design & Architecture
 
-When designing healthcare apps, UI isn't just about looking fancy—it directly affects real people trying to book a specialist in a hurry, or doctors managing a crowded morning OPD queue. 
-
-Here were my main design decisions:
-- **No heavy UI component libraries**: Instead of bloated Bootstrap or Tailwind bundles, I created a custom CSS design system (`index.css` & `App.css`) with clean CSS variables (`--bg-main`, `--text-primary`, `--primary-blue`, `--emerald-green`). This keeps the bundle feather-light and lightning fast.
-- **Human-Crafted Clinical Theme**: Soft slate backgrounds (`#f8fafc`), crisp white cards (`#ffffff`), deep navy headings (`#0f2942`), and clinical accents. It feels trustworthy, professional, and accessible to non-tech-savvy patients.
-- **A4 PDF Pass Generation On The Fly**: Using `jspdf`, patients and doctors can instantly generate and download official appointment confirmation passes with hospital letterheads, OPD timings, doctor credentials, and a verification seal—without waiting for a server-side PDF renderer.
-- **Dynamic Role-Based Views**: Based on the authenticated role (`ROLE_PATIENT`, `ROLE_DOCTOR`, `ROLE_HOSPITAL`, `ROLE_ADMIN`), the navigation seamlessly adjusts to show only the relevant tools and hides complex controls from patients.
+Key frontend decisions:
+- **Zero Heavy UI Libraries**: Built using native CSS variables (`index.css` & `App.css`) for high performance and lightweight bundle size.
+- **Clinical Design System**: Focused on high contrast, readable medical typography, and clean information hierarchy.
+- **Client-Side PDF Generation**: Generates official hospital passes on the fly with doctor details, QR/verification seal, and OPD timings via `jspdf`.
+- **Role-Based Access**: Adaptive navigation switching between Patient, Doctor, Hospital, and Admin interfaces based on active JWT session.
 
 ---
 
@@ -144,12 +142,11 @@ frontend/
 │   │   ├── HospitalPanel.jsx      # Hospital roster & bed capacity
 │   │   ├── AdminPanel.jsx         # User table & AI key settings
 │   │   ├── AiHealthAssistant.jsx  # Dr. MedPlus Gemini chat copilot
-│   │   ├── TriagePipeline.jsx     # Emergency NEWS2/ESI triage view
 │   │   └── Login.jsx              # Auth modal (Login & Register tabs)
 │   ├── components/
 │   │   ├── Navbar.jsx             # Responsive top navbar with mobile drawer
 │   │   ├── Footer.jsx             # Footer with hospital network details
-│   │   └── DoctorCard.jsx         # Specialist card component
+│   │   └── MetricCard.jsx         # Metric card component
 │   └── utils/
 │       └── pdfGenerator.js        # jsPDF consultation pass template builder
 ```

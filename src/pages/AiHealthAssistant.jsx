@@ -44,7 +44,7 @@ export const AiHealthAssistant = () => {
   const [messages, setMessages] = useState([
     {
       sender: 'assistant',
-      text: `Hello! I am **Dr. MedPlus AI**, your empathetic clinical health assistant on MedPlus Appointments.\n\nI can help you understand minor health symptoms, recommend safe home remedies, and guide you to the right specialist doctors across Muzaffarpur, Patna, and Delhi.\n\nHow are you feeling today? You can describe any symptom or tap a quick question below.`,
+      text: `Hello! I am your **MedPlus Health Assistant**.\n\nI can help you understand symptoms, general wellness advice, and guide you to the right medical specialist across Muzaffarpur, Patna, and Delhi.\n\nHow can I assist you today? You can describe any symptom or tap a quick question below.`,
       time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
     }
   ]);
